@@ -1,0 +1,51 @@
+========== ORIGINAL MATRIX ==========
+[[2 1 3]
+ [1 2 1]
+ [3 1 2]]
+
+========== MATRIX DIMENSIONS ==========
+Rows: 3
+Columns: 3
+
+========== DETERMINANT ==========
+Determinant: -8.0
+
+========== MATRIX RANK ==========
+Rank: 3
+
+========== MATRIX INVERSE ==========
+Inverse of Matrix:
+[[-0.375 -0.125  0.625]
+ [-0.125  0.625 -0.125]
+ [ 0.625 -0.125 -0.375]]
+
+========== INVERSE VERIFICATION ==========
+A x Inverse(A):
+[[1. 0. 0.]
+ [0. 1. 0.]
+ [0. 0. 1.]]
+Inverse verified successfully.
+
+========== EIGENVALUES ==========
+[ 5.562 -1.     1.438]
+
+========== TRACE ==========
+Trace: 6
+
+========== TRANSPOSE ==========
+[[2 1 3]
+ [1 2 1]
+ [3 1 2]]
+
+========== ENCRYPTION MATRIX ANALYSIS ==========
+Matrix is invertible.
+Matrix is suitable as a mathematical encryption key.
+
+========== SINGULAR MATRIX TEST ==========
+Singular Matrix:
+[[1 2 3]
+ [2 4 6]
+ [3 6 9]]
+Determinant: 0.0
+Rank: 1
+The matrix is singular and has no inverse.
