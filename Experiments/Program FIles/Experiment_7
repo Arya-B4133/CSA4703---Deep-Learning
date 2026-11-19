@@ -1,0 +1,144 @@
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Student examination marks
+marks = np.array([75, 80, 65, 90, 85, 70, 88, 92, 78, 82])
+
+print("========== STUDENT MARKS ==========")
+print("Marks:", marks)
+print("Number of Students:", len(marks))
+
+# Calculate mean
+print("\n========== MEAN ==========")
+
+mean = np.mean(marks)
+print("Mean Marks:", round(mean, 2))
+
+# Calculate variance
+print("\n========== VARIANCE ==========")
+
+variance = np.var(marks)
+print("Population Variance:", round(variance, 2))
+
+sample_variance = np.var(marks, ddof=1)
+print("Sample Variance:", round(sample_variance, 2))
+
+# Calculate standard deviation
+print("\n========== STANDARD DEVIATION ==========")
+
+std_dev = np.std(marks)
+print("Population Standard Deviation:", round(std_dev, 2))
+
+sample_std = np.std(marks, ddof=1)
+print("Sample Standard Deviation:", round(sample_std, 2))
+
+# Calculate minimum and maximum marks
+print("\n========== MINIMUM AND MAXIMUM ==========")
+
+print("Minimum Marks:", np.min(marks))
+print("Maximum Marks:", np.max(marks))
+print("Range:", np.max(marks) - np.min(marks))
+
+# Calculate median
+print("\n========== MEDIAN ==========")
+
+median = np.median(marks)
+print("Median Marks:", median)
+
+# Calculate quartiles
+print("\n========== QUARTILES ==========")
+
+q1 = np.percentile(marks, 25)
+q2 = np.percentile(marks, 50)
+q3 = np.percentile(marks, 75)
+
+print("First Quartile (Q1):", q1)
+print("Second Quartile (Q2):", q2)
+print("Third Quartile (Q3):", q3)
+
+# Calculate coefficient of variation
+print("\n========== COEFFICIENT OF VARIATION ==========")
+
+cv = (std_dev / mean) * 100
+print("Coefficient of Variation:", round(cv, 2), "%")
+
+# Identify students scoring above and below average
+print("\n========== STUDENT PERFORMANCE ==========")
+
+for i, mark in enumerate(marks):
+    if mark >= mean:
+        print("Student", i + 1, ":", mark, "- Above or equal to average")
+    else:
+        print("Student", i + 1, ":", mark, "- Below average")
+
+# Count students above and below average
+above = np.sum(marks >= mean)
+below = np.sum(marks < mean)
+
+print("\nStudents above or equal to average:", above)
+print("Students below average:", below)
+
+# Visualize marks using a histogram
+print("\n========== MARKS DISTRIBUTION ==========")
+
+plt.figure(figsize=(9, 5))
+
+plt.hist(
+    marks,
+    bins=6,
+    edgecolor="black",
+    alpha=0.7
+)
+
+plt.axvline(
+    mean,
+    linestyle="--",
+    linewidth=2,
+    label="Mean"
+)
+
+plt.title("Distribution of Student Examination Marks")
+plt.xlabel("Marks")
+plt.ylabel("Number of Students")
+plt.legend()
+plt.grid(axis="y", alpha=0.3)
+plt.show()
+
+# Visualize individual student marks
+plt.figure(figsize=(9, 5))
+
+plt.bar(
+    range(1, len(marks) + 1),
+    marks,
+    edgecolor="black"
+)
+
+plt.axhline(
+    mean,
+    linestyle="--",
+    label="Average Marks"
+)
+
+plt.xlabel("Student Number")
+plt.ylabel("Marks")
+plt.title("Student Performance Comparison")
+plt.xticks(range(1, len(marks) + 1))
+plt.legend()
+plt.grid(axis="y", alpha=0.3)
+plt.show()
+
+# Interpret consistency
+print("\n========== FINAL ANALYSIS ==========")
+
+if std_dev < 10:
+    print("Student performance is relatively consistent.")
+elif std_dev < 20:
+    print("Student performance shows moderate variation.")
+else:
+    print("Student performance shows high variation.")
+
+print("Mean represents average student performance.")
+print("Variance measures the spread of marks.")
+print("Standard deviation measures variation around the mean.")
+
