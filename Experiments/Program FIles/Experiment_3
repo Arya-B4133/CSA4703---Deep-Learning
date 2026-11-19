@@ -1,0 +1,89 @@
+
+import numpy as np
+
+# Create an encryption matrix
+A = np.array([[2, 1, 3],
+              [1, 2, 1],
+              [3, 1, 2]])
+
+print("========== ORIGINAL MATRIX ==========")
+print(A)
+
+# Display matrix dimensions
+print("\n========== MATRIX DIMENSIONS ==========")
+print("Rows:", A.shape[0])
+print("Columns:", A.shape[1])
+
+# Calculate determinant
+print("\n========== DETERMINANT ==========")
+det = np.linalg.det(A)
+print("Determinant:", round(det, 3))
+
+# Calculate matrix rank
+print("\n========== MATRIX RANK ==========")
+rank = np.linalg.matrix_rank(A)
+print("Rank:", rank)
+
+# Calculate inverse
+print("\n========== MATRIX INVERSE ==========")
+
+if not np.isclose(det, 0):
+    inverse = np.linalg.inv(A)
+    print("Inverse of Matrix:")
+    print(np.round(inverse, 3))
+else:
+    print("Inverse does not exist because determinant is zero.")
+
+# Verify inverse
+print("\n========== INVERSE VERIFICATION ==========")
+
+if not np.isclose(det, 0):
+    identity = np.matmul(A, inverse)
+    print("A x Inverse(A):")
+    print(np.round(identity, 3))
+
+    if np.allclose(identity, np.eye(A.shape[0])):
+        print("Inverse verified successfully.")
+    else:
+        print("Inverse verification failed.")
+
+# Calculate eigenvalues
+print("\n========== EIGENVALUES ==========")
+eigenvalues = np.linalg.eigvals(A)
+print(np.round(eigenvalues, 3))
+
+# Calculate trace
+print("\n========== TRACE ==========")
+trace = np.trace(A)
+print("Trace:", trace)
+
+# Calculate transpose
+print("\n========== TRANSPOSE ==========")
+print(A.T)
+
+# Check whether matrix is suitable for encryption
+print("\n========== ENCRYPTION MATRIX ANALYSIS ==========")
+
+if rank == A.shape[0] and not np.isclose(det, 0):
+    print("Matrix is invertible.")
+    print("Matrix is suitable as a mathematical encryption key.")
+else:
+    print("Matrix is singular.")
+    print("Matrix is not suitable for invertible matrix encryption.")
+
+# Demonstrate a second matrix with determinant zero
+print("\n========== SINGULAR MATRIX TEST ==========")
+
+B = np.array([[1, 2, 3],
+              [2, 4, 6],
+              [3, 6, 9]])
+
+print("Singular Matrix:")
+print(B)
+
+print("Determinant:", round(np.linalg.det(B), 3))
+print("Rank:", np.linalg.matrix_rank(B))
+
+if np.isclose(np.linalg.det(B), 0):
+    print("The matrix is singular and has no inverse.")
+
