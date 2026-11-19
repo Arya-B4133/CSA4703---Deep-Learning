@@ -1,0 +1,131 @@
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define customer purchasing behaviour
+# Each value represents spending in a product category
+
+customer1 = np.array([2, 4, 6])
+customer2 = np.array([5, 8, 3])
+customer3 = np.array([3, 5, 7])
+customer4 = np.array([8, 2, 4])
+customer5 = np.array([6, 7, 2])
+
+customers = [
+    customer1,
+    customer2,
+    customer3,
+    customer4,
+    customer5
+]
+
+# Display customer data
+print("========== CUSTOMER DATA ==========")
+
+for i, customer in enumerate(customers):
+    print("Customer", i + 1, ":", customer)
+
+# Define Euclidean distance
+def euclidean_distance(a, b):
+    return np.sqrt(np.sum((a - b) ** 2))
+
+# Define Manhattan distance
+def manhattan_distance(a, b):
+    return np.sum(np.abs(a - b))
+
+# Compare Customer 1 with all other customers
+print("\n========== DISTANCE FROM CUSTOMER 1 ==========")
+
+euclidean_results = []
+manhattan_results = []
+
+for i in range(1, len(customers)):
+    e_distance = euclidean_distance(customer1, customers[i])
+    m_distance = manhattan_distance(customer1, customers[i])
+
+    euclidean_results.append(e_distance)
+    manhattan_results.append(m_distance)
+
+    print("\nCustomer 1 and Customer", i + 1)
+    print("Euclidean Distance:", round(e_distance, 3))
+    print("Manhattan Distance:", round(m_distance, 3))
+
+# Create complete Euclidean distance matrix
+print("\n========== EUCLIDEAN DISTANCE MATRIX ==========")
+
+euclidean_matrix = np.zeros((5, 5))
+
+for i in range(5):
+    for j in range(5):
+        euclidean_matrix[i][j] = euclidean_distance(
+            customers[i], customers[j]
+        )
+
+print(np.round(euclidean_matrix, 2))
+
+# Create complete Manhattan distance matrix
+print("\n========== MANHATTAN DISTANCE MATRIX ==========")
+
+manhattan_matrix = np.zeros((5, 5))
+
+for i in range(5):
+    for j in range(5):
+        manhattan_matrix[i][j] = manhattan_distance(
+            customers[i], customers[j]
+        )
+
+print(manhattan_matrix)
+
+# Identify closest customer using Euclidean distance
+closest_euclidean = np.argmin(euclidean_results) + 2
+
+print("\n========== CLOSEST CUSTOMER ==========")
+print("Using Euclidean Distance: Customer", closest_euclidean)
+
+# Identify closest customer using Manhattan distance
+closest_manhattan = np.argmin(manhattan_results) + 2
+
+print("Using Manhattan Distance: Customer", closest_manhattan)
+
+# Compare distance metrics visually
+customer_labels = [
+    "Customer 2",
+    "Customer 3",
+    "Customer 4",
+    "Customer 5"
+]
+
+x = np.arange(len(customer_labels))
+width = 0.35
+
+plt.figure(figsize=(10, 5))
+
+plt.bar(
+    x - width / 2,
+    euclidean_results,
+    width,
+    label="Euclidean Distance"
+)
+
+plt.bar(
+    x + width / 2,
+    manhattan_results,
+    width,
+    label="Manhattan Distance"
+)
+
+plt.xlabel("Customers")
+plt.ylabel("Distance")
+plt.title("Comparison of Customer Distance Metrics")
+plt.xticks(x, customer_labels)
+plt.legend()
+plt.grid(axis="y", linestyle="--", alpha=0.5)
+plt.show()
+
+# Final analysis
+print("\n========== FINAL ANALYSIS ==========")
+print("Euclidean distance measures straight-line distance.")
+print("Manhattan distance measures coordinate-wise distance.")
+print("Smaller distance indicates more similar purchasing behaviour.")
+print("Both metrics can be used for customer grouping.")
+
