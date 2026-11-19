@@ -1,0 +1,81 @@
+
+import numpy as np
+
+# Create a transition matrix representing connections
+# between three web pages
+P = np.array([
+    [0.0, 0.5, 0.5],
+    [1.0, 0.0, 0.0],
+    [0.0, 0.5, 0.5]
+])
+
+print("========== TRANSITION MATRIX ==========")
+print(P)
+
+# Display matrix dimensions
+print("\n========== MATRIX DIMENSIONS ==========")
+print("Rows:", P.shape[0])
+print("Columns:", P.shape[1])
+
+# Calculate eigenvalues and eigenvectors
+print("\n========== EIGENVALUES AND EIGENVECTORS ==========")
+
+eigenvalues, eigenvectors = np.linalg.eig(P.T)
+
+print("Eigenvalues:")
+print(np.round(eigenvalues, 3))
+
+print("\nEigenvectors:")
+print(np.round(eigenvectors, 3))
+
+# Find the eigenvector corresponding to eigenvalue 1
+print("\n========== PAGE RANK CALCULATION ==========")
+
+index = np.argmin(np.abs(eigenvalues - 1))
+
+principal_vector = np.abs(eigenvectors[:, index].real)
+
+# Normalize the values
+page_rank = principal_vector / np.sum(principal_vector)
+
+print("Page Rank Scores:")
+for i, score in enumerate(page_rank):
+    print("Page", i + 1, ":", round(score, 4))
+
+# Identify the most important page
+print("\n========== MOST IMPORTANT PAGE ==========")
+
+important_page = np.argmax(page_rank)
+
+print("Most Important Page: Page", important_page + 1)
+print("Highest Rank Score:", round(page_rank[important_page], 4))
+
+# Verify that each row represents a probability distribution
+print("\n========== TRANSITION MATRIX VERIFICATION ==========")
+
+row_sums = np.sum(P, axis=1)
+
+print("Row Sums:", row_sums)
+
+if np.allclose(row_sums, 1):
+    print("Valid transition matrix.")
+else:
+    print("Invalid transition matrix.")
+
+# Calculate matrix transpose
+print("\n========== TRANSPOSE ==========")
+print(P.T)
+
+# Calculate matrix trace
+print("\n========== MATRIX TRACE ==========")
+print("Trace:", np.trace(P))
+
+# Display ranking in descending order
+print("\n========== PAGE RANKING ==========")
+
+ranking = np.argsort(page_rank)[::-1]
+
+for position, page in enumerate(ranking):
+    print(position + 1, ". Page", page + 1,
+          "Score:", round(page_rank[page], 4))
+
