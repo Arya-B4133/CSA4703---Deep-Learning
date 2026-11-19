@@ -1,0 +1,170 @@
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import stats
+
+# Set random seed for reproducibility
+np.random.seed(42)
+
+# Generate random temperature observations
+mean_temperature = 30
+std_temperature = 5
+sample_size = 1000
+
+temperatures = np.random.normal(
+    loc=mean_temperature,
+    scale=std_temperature,
+    size=sample_size
+)
+
+print("========== RANDOM TEMPERATURE DATA ==========")
+
+print("First 20 Temperature Observations:")
+print(np.round(temperatures[:20], 2))
+
+print("\nTotal Number of Observations:", len(temperatures))
+
+# Calculate statistical measurements
+print("\n========== STATISTICAL ANALYSIS ==========")
+
+sample_mean = np.mean(temperatures)
+sample_median = np.median(temperatures)
+sample_variance = np.var(temperatures)
+sample_std = np.std(temperatures)
+
+print("Expected Mean:", mean_temperature)
+print("Sample Mean:", round(sample_mean, 3))
+
+print("Expected Standard Deviation:", std_temperature)
+print("Sample Standard Deviation:", round(sample_std, 3))
+
+print("Sample Median:", round(sample_median, 3))
+print("Sample Variance:", round(sample_variance, 3))
+
+print("Minimum Temperature:", round(np.min(temperatures), 2))
+print("Maximum Temperature:", round(np.max(temperatures), 2))
+
+# Calculate percentiles
+print("\n========== PERCENTILE ANALYSIS ==========")
+
+print("25th Percentile:", round(np.percentile(temperatures, 25), 2))
+print("50th Percentile:", round(np.percentile(temperatures, 50), 2))
+print("75th Percentile:", round(np.percentile(temperatures, 75), 2))
+
+# Plot histogram of generated temperatures
+print("\n========== TEMPERATURE HISTOGRAM ==========")
+
+plt.figure(figsize=(9, 5))
+
+plt.hist(
+    temperatures,
+    bins=30,
+    density=True,
+    edgecolor="black",
+    alpha=0.7,
+    label="Generated Temperatures"
+)
+
+plt.title("Distribution of Random Temperature Observations")
+plt.xlabel("Temperature (°C)")
+plt.ylabel("Probability Density")
+plt.legend()
+plt.grid(alpha=0.3)
+plt.show()
+
+# Generate expected normal distribution curve
+print("\n========== NORMAL DISTRIBUTION CURVE ==========")
+
+x = np.linspace(
+    temperatures.min(),
+    temperatures.max(),
+    200
+)
+
+y = stats.norm.pdf(
+    x,
+    loc=mean_temperature,
+    scale=std_temperature
+)
+
+plt.figure(figsize=(9, 5))
+
+plt.plot(
+    x,
+    y,
+    linewidth=2,
+    label="Expected Normal Distribution"
+)
+
+plt.title("Expected Normal Probability Distribution")
+plt.xlabel("Temperature (°C)")
+plt.ylabel("Probability Density")
+plt.legend()
+plt.grid(alpha=0.3)
+plt.show()
+
+# Compare generated data with expected distribution
+print("\n========== DISTRIBUTION COMPARISON ==========")
+
+plt.figure(figsize=(9, 5))
+
+plt.hist(
+    temperatures,
+    bins=30,
+    density=True,
+    alpha=0.6,
+    edgecolor="black",
+    label="Generated Samples"
+)
+
+plt.plot(
+    x,
+    y,
+    linewidth=2,
+    label="Expected Normal Distribution"
+)
+
+plt.title("Generated Samples vs Expected Distribution")
+plt.xlabel("Temperature (°C)")
+plt.ylabel("Probability Density")
+plt.legend()
+plt.grid(alpha=0.3)
+plt.show()
+
+# Perform Kolmogorov-Smirnov goodness-of-fit test
+print("\n========== KOLMOGOROV-SMIRNOV TEST ==========")
+
+ks_statistic, p_value = stats.kstest(
+    temperatures,
+    "norm",
+    args=(mean_temperature, std_temperature)
+)
+
+print("KS Statistic:", round(ks_statistic, 4))
+print("P-value:", round(p_value, 4))
+
+if p_value > 0.05:
+    print("The generated observations are consistent with the expected normal distribution.")
+else:
+    print("The generated observations differ significantly from the expected distribution.")
+
+# Calculate probability of temperature ranges
+print("\n========== TEMPERATURE RANGE PROBABILITIES ==========")
+
+below_25 = np.mean(temperatures < 25)
+between_25_35 = np.mean(
+    (temperatures >= 25) & (temperatures <= 35)
+)
+above_35 = np.mean(temperatures > 35)
+
+print("Probability below 25°C:", round(below_25, 4))
+print("Probability between 25°C and 35°C:", round(between_25_35, 4))
+print("Probability above 35°C:", round(above_35, 4))
+
+# Display final analysis
+print("\n========== FINAL ANALYSIS ==========")
+
+print("Random temperature samples were generated.")
+print("The sample mean was compared with the expected mean.")
+print("The sample standard deviation was compared with the expected value.")
+print("The histogram was compared with the normal distribution curve.")
