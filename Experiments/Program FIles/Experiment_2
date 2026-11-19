@@ -1,0 +1,122 @@
+
+import numpy as np
+
+# Create two matrices
+A = np.array([[1, 2],
+              [3, 4]])
+
+B = np.array([[5, 6],
+              [7, 8]])
+
+print("========== ORIGINAL MATRICES ==========")
+print("\nMatrix A:")
+print(A)
+
+print("\nMatrix B:")
+print(B)
+
+# Display matrix dimensions
+print("\n========== MATRIX DIMENSIONS ==========")
+print("Shape of A:", A.shape)
+print("Shape of B:", B.shape)
+
+# Matrix addition
+print("\n========== MATRIX ADDITION ==========")
+addition = np.add(A, B)
+print("A + B:")
+print(addition)
+
+# Matrix subtraction
+print("\n========== MATRIX SUBTRACTION ==========")
+subtraction = np.subtract(A, B)
+print("A - B:")
+print(subtraction)
+
+# Matrix multiplication
+print("\n========== MATRIX MULTIPLICATION ==========")
+multiplication = np.matmul(A, B)
+print("A x B:")
+print(multiplication)
+
+# Reverse matrix multiplication
+print("\n========== REVERSE MULTIPLICATION ==========")
+reverse = np.matmul(B, A)
+print("B x A:")
+print(reverse)
+
+# Element-wise multiplication
+print("\n========== ELEMENT-WISE MULTIPLICATION ==========")
+element_multiplication = np.multiply(A, B)
+print("A * B:")
+print(element_multiplication)
+
+# Transpose of matrix A
+print("\n========== TRANSPOSE OF MATRIX A ==========")
+transpose_A = np.transpose(A)
+print(transpose_A)
+
+# Transpose of matrix B
+print("\n========== TRANSPOSE OF MATRIX B ==========")
+transpose_B = np.transpose(B)
+print(transpose_B)
+
+# Matrix multiplication using transposed matrices
+print("\n========== MULTIPLICATION USING TRANSPOSE ==========")
+transpose_result = np.matmul(A.T, B.T)
+print("A Transpose x B Transpose:")
+print(transpose_result)
+
+# Check matrix equality
+print("\n========== MATRIX COMPARISON ==========")
+
+if np.array_equal(multiplication, reverse):
+    print("A x B is equal to B x A")
+else:
+    print("A x B is not equal to B x A")
+
+# Verify transpose property
+print("\n========== TRANSPOSE PROPERTY ==========")
+print("Transpose of A x B:")
+print(np.matmul(A, B).T)
+
+print("\nB Transpose x A Transpose:")
+print(np.matmul(B.T, A.T))
+
+if np.array_equal((A @ B).T, B.T @ A.T):
+    print("Transpose property verified successfully.")
+
+# Scalar multiplication
+print("\n========== SCALAR MULTIPLICATION ==========")
+scalar = 3
+scalar_result = scalar * A
+
+print("Scalar:", scalar)
+print("3 x A:")
+print(scalar_result)
+
+# Demonstrate rectangular matrix transpose
+print("\n========== RECTANGULAR MATRIX TRANSPOSE ==========")
+
+C = np.array([[1, 2, 3],
+              [4, 5, 6]])
+
+print("Original Matrix C:")
+print(C)
+
+print("Original Shape:", C.shape)
+
+print("\nTranspose of C:")
+print(C.T)
+
+print("Transposed Shape:", C.T.shape)
+
+# Final results
+print("\n========== FINAL ANALYSIS ==========")
+print("Matrix multiplication result:")
+print(multiplication)
+
+print("\nMatrix transpose changes rows into columns.")
+print("Matrix multiplication produces a new matrix.")
+print("Element-wise multiplication multiplies corresponding elements.")
+print("Matrix multiplication is generally not commutative.")
+print("Transpose changes the dimensions of rectangular matrices.")
