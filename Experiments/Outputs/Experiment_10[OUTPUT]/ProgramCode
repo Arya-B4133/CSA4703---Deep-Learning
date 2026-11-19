@@ -1,0 +1,46 @@
+========== RANDOM TEMPERATURE DATA ==========
+First 20 Temperature Observations:
+[32.48 29.31 33.24 37.62 28.83 28.83 37.9  33.84 27.65 32.71 27.68 27.67
+ 31.21 20.43 21.38 27.19 24.94 31.57 25.46 22.94]
+
+Total Number of Observations: 1000
+
+========== STATISTICAL ANALYSIS ==========
+Expected Mean: 30
+Sample Mean: 30.097
+Expected Standard Deviation: 5
+Sample Standard Deviation: 4.894
+Sample Median: 30.127
+Sample Variance: 23.948
+Minimum Temperature: 13.79
+Maximum Temperature: 49.26
+
+========== PERCENTILE ANALYSIS ==========
+25th Percentile: 26.76
+50th Percentile: 30.13
+75th Percentile: 33.24
+
+========== TEMPERATURE HISTOGRAM ==========
+
+
+========== NORMAL DISTRIBUTION CURVE ==========
+
+
+========== DISTRIBUTION COMPARISON ==========
+
+
+========== KOLMOGOROV-SMIRNOV TEST ==========
+KS Statistic: 0.0173
+P-value: 0.9197
+The generated observations are consistent with the expected normal distribution.
+
+========== TEMPERATURE RANGE PROBABILITIES ==========
+Probability below 25°C: 0.147
+Probability between 25°C and 35°C: 0.698
+Probability above 35°C: 0.155
+
+========== FINAL ANALYSIS ==========
+Random temperature samples were generated.
+The sample mean was compared with the expected mean.
+The sample standard deviation was compared with the expected value.
+The histogram was compared with the normal distribution curve.
