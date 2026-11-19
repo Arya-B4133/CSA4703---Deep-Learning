@@ -1,0 +1,166 @@
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define disease and diagnostic test probabilities
+
+prevalence = 0.01
+sensitivity = 0.95
+specificity = 0.90
+
+print("========== MEDICAL TEST PARAMETERS ==========")
+
+print("Disease Prevalence:", prevalence)
+print("Test Sensitivity:", sensitivity)
+print("Test Specificity:", specificity)
+
+# Calculate probability of not having the disease
+P_no_disease = 1 - prevalence
+
+# Calculate false positive and true negative probabilities
+false_positive_rate = 1 - specificity
+true_negative_rate = specificity
+
+print("\n========== TEST PROBABILITIES ==========")
+
+print("Probability of No Disease:", P_no_disease)
+print("False Positive Rate:", false_positive_rate)
+print("True Negative Rate:", true_negative_rate)
+
+# Calculate probability of testing positive
+P_positive = (
+    prevalence * sensitivity
+    + P_no_disease * false_positive_rate
+)
+
+print("\n========== TOTAL PROBABILITY ==========")
+print("Probability of Positive Test:", round(P_positive, 4))
+
+# Apply Bayes' theorem
+P_disease_given_positive = (
+    prevalence * sensitivity
+) / P_positive
+
+print("\n========== BAYES THEOREM ==========")
+
+print("Probability of Having Disease Given Positive Test:",
+      round(P_disease_given_positive, 4))
+
+print("Percentage:",
+      round(P_disease_given_positive * 100, 2), "%")
+
+# Calculate probability of not having disease after positive test
+P_no_disease_given_positive = (
+    P_no_disease * false_positive_rate
+) / P_positive
+
+print("Probability of No Disease Given Positive Test:",
+      round(P_no_disease_given_positive, 4))
+
+# Calculate probability of testing negative
+P_negative = 1 - P_positive
+
+print("\n========== NEGATIVE TEST ANALYSIS ==========")
+
+P_disease_given_negative = (
+    prevalence * (1 - sensitivity)
+) / P_negative
+
+P_no_disease_given_negative = (
+    P_no_disease * specificity
+) / P_negative
+
+print("Probability of Disease Given Negative Test:",
+      round(P_disease_given_negative, 4))
+
+print("Probability of No Disease Given Negative Test:",
+      round(P_no_disease_given_negative, 4))
+
+# Demonstrate using a hypothetical population
+print("\n========== POPULATION ANALYSIS ==========")
+
+population = 10000
+
+diseased = population * prevalence
+healthy = population - diseased
+
+true_positives = diseased * sensitivity
+false_negatives = diseased * (1 - sensitivity)
+
+false_positives = healthy * false_positive_rate
+true_negatives = healthy * specificity
+
+print("Total Population:", population)
+print("People with Disease:", int(diseased))
+print("Healthy People:", int(healthy))
+print("True Positives:", int(true_positives))
+print("False Positives:", int(false_positives))
+print("True Negatives:", int(true_negatives))
+print("False Negatives:", int(false_negatives))
+
+# Compare disease probabilities after positive and negative tests
+print("\n========== FINAL COMPARISON ==========")
+
+print("Disease Probability After Positive Test:",
+      round(P_disease_given_positive * 100, 2), "%")
+
+print("Disease Probability After Negative Test:",
+      round(P_disease_given_negative * 100, 2), "%")
+
+# Visualize the test results
+labels = [
+    "True Positive",
+    "False Positive",
+    "True Negative",
+    "False Negative"
+]
+
+values = [
+    true_positives,
+    false_positives,
+    true_negatives,
+    false_negatives
+]
+
+plt.figure(figsize=(9, 5))
+plt.bar(labels, values, edgecolor="black")
+
+plt.title("Medical Diagnostic Test Results")
+plt.xlabel("Test Result Category")
+plt.ylabel("Number of People")
+plt.xticks(rotation=15)
+plt.grid(axis="y", alpha=0.3)
+plt.show()
+
+# Visualize positive and negative test probabilities
+test_labels = ["Positive Test", "Negative Test"]
+
+disease_probabilities = [
+    P_disease_given_positive * 100,
+    P_disease_given_negative * 100
+]
+
+plt.figure(figsize=(8, 5))
+plt.bar(
+    test_labels,
+    disease_probabilities,
+    edgecolor="black"
+)
+
+plt.title("Disease Probability Based on Test Result")
+plt.ylabel("Probability of Having Disease (%)")
+plt.ylim(0, 100)
+plt.grid(axis="y", alpha=0.3)
+plt.show()
+
+# Verify probability calculations
+print("\n========== VERIFICATION ==========")
+
+print("Positive Test Probability:",
+      round(P_positive, 4))
+
+print("Negative Test Probability:",
+      round(P_negative, 4))
+
+print("Total Probability:",
+      round(P_positive + P_negative, 4))
