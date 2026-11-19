@@ -1,0 +1,125 @@
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Probability of production by each machine
+P_A = 0.60
+P_B = 0.40
+
+# Probability of producing a defective product
+P_D_given_A = 0.02
+P_D_given_B = 0.05
+
+print("========== MACHINE PRODUCTION DATA ==========")
+
+print("Machine A Production Probability:", P_A)
+print("Machine B Production Probability:", P_B)
+
+print("\nDefect Probability of Machine A:", P_D_given_A)
+print("Defect Probability of Machine B:", P_D_given_B)
+
+# Calculate probability of non-defective products
+P_ND_given_A = 1 - P_D_given_A
+P_ND_given_B = 1 - P_D_given_B
+
+print("\n========== NON-DEFECTIVE PROBABILITIES ==========")
+
+print("Machine A:", P_ND_given_A)
+print("Machine B:", P_ND_given_B)
+
+# Calculate total probability of a defective product
+print("\n========== TOTAL PROBABILITY ==========")
+
+P_D = (
+    P_A * P_D_given_A
+    + P_B * P_D_given_B
+)
+
+print("Probability of a defective product:", round(P_D, 4))
+
+# Calculate total probability of a non-defective product
+P_ND = (
+    P_A * P_ND_given_A
+    + P_B * P_ND_given_B
+)
+
+print("Probability of a non-defective product:", round(P_ND, 4))
+
+# Apply Bayes' theorem
+print("\n========== BAYES THEOREM ==========")
+
+P_A_given_D = (P_A * P_D_given_A) / P_D
+P_B_given_D = (P_B * P_D_given_B) / P_D
+
+print("Probability defective product came from Machine A:",
+      round(P_A_given_D, 4))
+
+print("Probability defective product came from Machine B:",
+      round(P_B_given_D, 4))
+
+# Calculate probability of machine given non-defective product
+print("\n========== NON-DEFECTIVE PRODUCT ANALYSIS ==========")
+
+P_A_given_ND = (P_A * P_ND_given_A) / P_ND
+P_B_given_ND = (P_B * P_ND_given_B) / P_ND
+
+print("Machine A given non-defective product:",
+      round(P_A_given_ND, 4))
+
+print("Machine B given non-defective product:",
+      round(P_B_given_ND, 4))
+
+# Display probabilities as percentages
+print("\n========== PERCENTAGE RESULTS ==========")
+
+print("Defective product from Machine A:",
+      round(P_A_given_D * 100, 2), "%")
+
+print("Defective product from Machine B:",
+      round(P_B_given_D * 100, 2), "%")
+
+# Identify the most likely machine
+print("\n========== MOST LIKELY MACHINE ==========")
+
+if P_A_given_D > P_B_given_D:
+    print("Machine A is more likely to have produced the defective product.")
+else:
+    print("Machine B is more likely to have produced the defective product.")
+
+# Visualize defect probabilities
+machines = ["Machine A", "Machine B"]
+defect_rates = [P_D_given_A * 100, P_D_given_B * 100]
+
+plt.figure(figsize=(8, 5))
+plt.bar(machines, defect_rates, edgecolor="black")
+
+plt.title("Defect Rate Comparison")
+plt.xlabel("Manufacturing Machines")
+plt.ylabel("Defective Products (%)")
+plt.grid(axis="y", alpha=0.3)
+plt.show()
+
+# Visualize conditional probabilities
+probabilities = [
+    P_A_given_D * 100,
+    P_B_given_D * 100
+]
+
+plt.figure(figsize=(8, 5))
+plt.bar(machines, probabilities, edgecolor="black")
+
+plt.title("Probability of Machine Given a Defective Product")
+plt.xlabel("Manufacturing Machines")
+plt.ylabel("Probability (%)")
+plt.ylim(0, 100)
+plt.grid(axis="y", alpha=0.3)
+plt.show()
+
+# Verify total probability
+print("\n========== VERIFICATION ==========")
+
+print("P(A | D) + P(B | D) =",
+      round(P_A_given_D + P_B_given_D, 4))
+
+if np.isclose(P_A_given_D + P_B_given_D, 1):
+    print("Conditional probability verification successful.")
