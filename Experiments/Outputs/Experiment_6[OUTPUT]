@@ -1,0 +1,49 @@
+========== CUSTOMER DATA ==========
+Customer 1 : [2 4 6]
+Customer 2 : [5 8 3]
+Customer 3 : [3 5 7]
+Customer 4 : [8 2 4]
+Customer 5 : [6 7 2]
+
+========== DISTANCE FROM CUSTOMER 1 ==========
+
+Customer 1 and Customer 2
+Euclidean Distance: 5.831
+Manhattan Distance: 10
+
+Customer 1 and Customer 3
+Euclidean Distance: 1.732
+Manhattan Distance: 3
+
+Customer 1 and Customer 4
+Euclidean Distance: 6.633
+Manhattan Distance: 10
+
+Customer 1 and Customer 5
+Euclidean Distance: 6.403
+Manhattan Distance: 11
+
+========== EUCLIDEAN DISTANCE MATRIX ==========
+[[0.   5.83 1.73 6.63 6.4 ]
+ [5.83 0.   5.39 6.78 1.73]
+ [1.73 5.39 0.   6.56 6.16]
+ [6.63 6.78 6.56 0.   5.74]
+ [6.4  1.73 6.16 5.74 0.  ]]
+
+========== MANHATTAN DISTANCE MATRIX ==========
+[[ 0. 10.  3. 10. 11.]
+ [10.  0.  9. 10.  3.]
+ [ 3.  9.  0. 11. 10.]
+ [10. 10. 11.  0.  9.]
+ [11.  3. 10.  9.  0.]]
+
+========== CLOSEST CUSTOMER ==========
+Using Euclidean Distance: Customer 3
+Using Manhattan Distance: Customer 3
+
+
+========== FINAL ANALYSIS ==========
+Euclidean distance measures straight-line distance.
+Manhattan distance measures coordinate-wise distance.
+Smaller distance indicates more similar purchasing behaviour.
+Both metrics can be used for customer grouping.
