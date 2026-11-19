@@ -1,0 +1,55 @@
+========== STUDENT MARKS ==========
+Marks: [75 80 65 90 85 70 88 92 78 82]
+Number of Students: 10
+
+========== MEAN ==========
+Mean Marks: 80.5
+
+========== VARIANCE ==========
+Population Variance: 68.85
+Sample Variance: 76.5
+
+========== STANDARD DEVIATION ==========
+Population Standard Deviation: 8.3
+Sample Standard Deviation: 8.75
+
+========== MINIMUM AND MAXIMUM ==========
+Minimum Marks: 65
+Maximum Marks: 92
+Range: 27
+
+========== MEDIAN ==========
+Median Marks: 81.0
+
+========== QUARTILES ==========
+First Quartile (Q1): 75.75
+Second Quartile (Q2): 81.0
+Third Quartile (Q3): 87.25
+
+========== COEFFICIENT OF VARIATION ==========
+Coefficient of Variation: 10.31 %
+
+========== STUDENT PERFORMANCE ==========
+Student 1 : 75 - Below average
+Student 2 : 80 - Below average
+Student 3 : 65 - Below average
+Student 4 : 90 - Above or equal to average
+Student 5 : 85 - Above or equal to average
+Student 6 : 70 - Below average
+Student 7 : 88 - Above or equal to average
+Student 8 : 92 - Above or equal to average
+Student 9 : 78 - Below average
+Student 10 : 82 - Above or equal to average
+
+Students above or equal to average: 5
+Students below average: 5
+
+========== MARKS DISTRIBUTION ==========
+
+
+
+========== FINAL ANALYSIS ==========
+Student performance is relatively consistent.
+Mean represents average student performance.
+Variance measures the spread of marks.
+Standard deviation measures variation around the mean.
