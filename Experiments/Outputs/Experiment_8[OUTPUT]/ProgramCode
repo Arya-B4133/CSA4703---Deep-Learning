@@ -1,0 +1,35 @@
+========== MACHINE PRODUCTION DATA ==========
+Machine A Production Probability: 0.6
+Machine B Production Probability: 0.4
+
+Defect Probability of Machine A: 0.02
+Defect Probability of Machine B: 0.05
+
+========== NON-DEFECTIVE PROBABILITIES ==========
+Machine A: 0.98
+Machine B: 0.95
+
+========== TOTAL PROBABILITY ==========
+Probability of a defective product: 0.032
+Probability of a non-defective product: 0.968
+
+========== BAYES THEOREM ==========
+Probability defective product came from Machine A: 0.375
+Probability defective product came from Machine B: 0.625
+
+========== NON-DEFECTIVE PRODUCT ANALYSIS ==========
+Machine A given non-defective product: 0.6074
+Machine B given non-defective product: 0.3926
+
+========== PERCENTAGE RESULTS ==========
+Defective product from Machine A: 37.5 %
+Defective product from Machine B: 62.5 %
+
+========== MOST LIKELY MACHINE ==========
+Machine B is more likely to have produced the defective product.
+
+
+
+========== VERIFICATION ==========
+P(A | D) + P(B | D) = 1.0
+Conditional probability verification successful.
