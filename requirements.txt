@@ -1,0 +1,13 @@
+# Colab already provides most of these; install locally with: pip install -r requirements.txt
+torch
+torchaudio
+panns-inference
+librosa
+soundfile
+scikit-learn
+pandas
+numpy
+matplotlib
+seaborn
+ipywidgets
+tqdm

@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Urban Sound Classification · Project Showcase</title>
+<style>
+:root{--bg:#f5f7fa;--card:#fff;--ink:#16212b;--mut:#5a6775;--line:#dce2e9;--acc:#1d6fd1;--acc2:#0d9b78;--bad:#c2410c;--hero:linear-gradient(135deg,#e3eefc,#e3f6ee);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e141b;--card:#17202a;--ink:#e8edf2;--mut:#9aa7b4;--line:#293441;--acc:#5aa2f0;--acc2:#3fcfa8;--bad:#fb923c;--hero:linear-gradient(135deg,#14243a,#12302a);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e141b;--card:#17202a;--ink:#e8edf2;--mut:#9aa7b4;--line:#293441;--acc:#5aa2f0;--acc2:#3fcfa8;--bad:#fb923c;--hero:linear-gradient(135deg,#14243a,#12302a);color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:0 18px}
+header{background:var(--hero);border-bottom:1px solid var(--line);padding:46px 0 34px}
+h1{font-size:clamp(26px,5vw,40px);line-height:1.15;margin:0 0 10px}
+h2{font-size:24px;margin:44px 0 6px}
+.lead{color:var(--mut);max-width:720px;margin:0 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:4px 12px;font-size:13px}
+.sub{color:var(--mut);margin:0 0 16px;max-width:760px}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.card h3{margin:0 0 6px;font-size:16px}
+.card p{margin:0;color:var(--mut);font-size:14.5px}
+.num{font-size:12px;font-weight:700;color:var(--acc);letter-spacing:.05em}
+.sel{outline:2px solid var(--acc2)}
+.kv{font-size:13.5px;margin-top:10px;border-top:1px solid var(--line);padding-top:8px}
+.kv b{color:var(--ink)}
+.drop{display:flex;gap:12px;align-items:center;flex-wrap:wrap;background:var(--card);border:1.5px dashed var(--line);border-radius:14px;padding:16px}
+button,select,input[type=file]{font:inherit;color:var(--ink)}
+select{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 8px;max-width:100%}
+.stats{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin:16px 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+.stat b{display:block;font-size:28px;line-height:1.1}
+.stat span{color:var(--mut);font-size:13px}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13.5px;background:var(--card);border:1px solid var(--line);border-radius:10px}
+th,td{padding:6px 9px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--mut);font-weight:600}
+.two{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
+.bar{display:grid;grid-template-columns:96px 1fr 46px;gap:8px;align-items:center;font-size:13px;margin:4px 0}
+.bar i{display:block;height:12px;border-radius:6px;background:var(--line);overflow:hidden}
+.bar i u{display:block;height:100%;background:var(--acc)}
+.bar.t i u{background:var(--acc2)}
+.tag{display:inline-block;border-radius:6px;padding:1px 8px;font-size:12px;border:1px solid var(--line)}
+.ok{color:var(--acc2)}.no{color:var(--bad)}
+canvas{width:100%;border-radius:10px;border:1px solid var(--line);background:var(--card);display:block}
+#spec{image-rendering:pixelated}
+.note{color:var(--mut);font-size:13px;margin-top:8px}
+footer{margin:46px 0 30px;color:var(--mut);font-size:13.5px;border-top:1px solid var(--line);padding-top:16px}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1>Deep Learning-Based Urban Sound Classification and Acoustic Analysis</h1>
+  <p class="lead">A pipeline that listens to a short city-sound clip, tags the sources it hears, tracks patterns over time and place, and flags unusual recordings. This page showcases the project’s output.</p>
+  <div class="chips"><span class="chip">Urban-10 · 10 classes · 400 clips</span><span class="chip">PANNs CNN14, frozen</span><span class="chip">20,490 trained parameters</span><span class="chip">Sigmoid multi-label output</span><span class="chip">Masked weighted BCE</span></div>
+</div></header>
+
+<main class="wrap">
+<h2>How it works</h2>
+<p class="sub">Six stages, from raw audio to an analyst-ready dashboard.</p>
+<div class="grid">
+  <div class="card"><div class="num">1</div><h3>Audio in</h3><p>Mono clip, 5 s at 32 kHz. Invalid input (silent, too short, NaN) is rejected before the model sees it.</p></div>
+  <div class="card"><div class="num">2</div><h3>Log-Mel features</h3><p>64 Mel bands turn sound into an image-like spectrogram. Try it live in the lab below.</p></div>
+  <div class="card"><div class="num">3</div><h3>CNN14 backbone</h3><p>Pretrained on AudioSet and frozen: 12 convolution layers produce a 2048-D embedding.</p></div>
+  <div class="card"><div class="num">4</div><h3>Sigmoid head</h3><p>One independent score per class, so overlapping sounds can both be detected.</p></div>
+  <div class="card"><div class="num">5</div><h3>Thresholds and ABSTAIN</h3><p>Per-class thresholds tuned on validation data. If no class passes, the system abstains.</p></div>
+  <div class="card"><div class="num">6</div><h3>Patterns and anomalies</h3><p>Hour and location trends, plus an Isolation Forest that flags unusual recordings.</p></div>
+</div>
+
+<h2>Three approaches compared</h2>
+<p class="sub">Same data, same split, same metrics. The transfer-learning model is the project’s final choice.</p>
+<div class="grid">
+  <div class="card"><h3>MFCC + SVM</h3><p>Classical baseline: 40 statistics per clip into an RBF-kernel SVM.</p><div class="kv"><b>Needs</b> no GPU<br><b>Weakness</b> discards time structure</div></div>
+  <div class="card"><h3>CNN from scratch</h3><p>Three conv layers (32, 64, 128 filters), trained from random weights.</p><div class="kv"><b>Parameters</b> 94,186<br><b>Compute</b> ≈ 380 M MACs per clip</div></div>
+  <div class="card sel"><h3>CNN14 transfer (final)</h3><p>Frozen pretrained backbone plus a Dropout 0.30 → Linear(2048→10) → Sigmoid head.</p><div class="kv"><b>Trained</b> 20,490 of 80.77 M parameters<br><b>Compute</b> ≈ 9.95 G MACs per clip</div></div>
+</div>
+
+<h2>Results explorer</h2>
+<p class="sub">Load the <code>predictions.csv</code> that notebook Section 12 saves to <code>MyDrive/UrbanSoundMini/</code>. Every number below is computed in your browser from that file, so nothing here is hard-coded.</p>
+<div class="drop">
+  <input id="csv" type="file" accept=".csv">
+  <label>Split <select id="split" disabled></select></label>
+  <span id="csvmsg" class="note">No file loaded yet.</span>
+</div>
+<div id="res" hidden>
+  <div class="stats" id="stats"></div>
+  <div class="two">
+    <div><h3>Per-class results</h3><div class="scroll"><table id="per"></table></div></div>
+    <div><h3>Confusion matrix <span class="note">(rows true, columns predicted)</span></h3><div class="scroll"><table id="cm"></table></div></div>
+  </div>
+  <h3 style="margin-top:22px">Clip browser</h3>
+  <label>Clip <select id="clip"></select></label>
+  <div id="clipview" style="margin-top:10px"></div>
+  <p class="note">Train-split numbers are optimistic because the model saw those clips. Report the test split.</p>
+</div>
+
+<h2>Spectrogram lab</h2>
+<p class="sub">Drop in any audio file. The page decodes it, resamples to 32 kHz, and computes the same 64-bin log-Mel spectrogram the project feeds its models (FFT 1024, hop 256, 50–14,000 Hz). It runs entirely in your browser.</p>
+<div class="drop"><input id="aud" type="file" accept="audio/*"><span id="audmsg" class="note">Choose a file to begin.</span></div>
+<div id="lab" hidden style="margin-top:14px">
+  <audio id="player" controls style="width:100%;margin-bottom:10px"></audio>
+  <canvas id="wave" height="110"></canvas>
+  <canvas id="spec" height="200" style="margin-top:10px"></canvas>
+  <p class="note">Top: waveform. Bottom: log-Mel spectrogram (low frequencies at the bottom, time to the right).</p>
+</div>
+
+<footer>
+  Showcase page for the CSA capstone project. Classification scores come from the team’s own notebook run; this page does not run the neural network in the browser. Dataset: Urban-10, urban classes of ESC-50 (Piczak, 2015; CC BY-NC). Backbone: PANNs CNN14 (Kong et al., 2020).
+</footer>
+</main>
+
+<script>
+const $ = s => document.querySelector(s);
+let rows = [], classes = [];
+
+/* ---------- results explorer ---------- */
+function parseCSV(t){const L=t.trim().split(/\r?\n/);const h=L[0].split(",");return L.slice(1).map(l=>{const c=l.split(",");const o={};h.forEach((k,i)=>o[k]=c[i]);return o})}
+function stats(sel){
+  const n=classes.length, idx=Object.fromEntries(classes.map((c,i)=>[c,i]));
+  const M=Array.from({length:n},()=>Array(n).fill(0));
+  sel.forEach(r=>{const a=idx[r.true],b=idx[r.predicted];if(a!=null&&b!=null)M[a][b]++});
+  const per=classes.map((c,i)=>{const tp=M[i][i],fp=M.reduce((s,r)=>s+r[i],0)-tp,fn=M[i].reduce((s,v)=>s+v,0)-tp;
+    const p=tp/(tp+fp)||0,r=tp/(tp+fn)||0;return{c,p,r,f:2*p*r/(p+r)||0,n:tp+fn}});
+  return{M,per,acc:M.reduce((s,r,i)=>s+r[i],0)/(sel.length||1),mf:per.reduce((s,x)=>s+x.f,0)/n};
+}
+const pct=v=>(100*v).toFixed(1)+"%";
+$("#csv").addEventListener("change",async e=>{
+  const f=e.target.files[0]; if(!f) return;
+  try{ rows=parseCSV(await f.text()); }catch(err){ rows=[]; }
+  classes=rows.length?Object.keys(rows[0]).filter(k=>k.startsWith("score_")).map(k=>k.slice(6)):[];
+  if(!rows.length||!classes.length||!("true" in rows[0])||!("predicted" in rows[0])){
+    $("#csvmsg").textContent="That does not look like predictions.csv from notebook Section 12."; $("#res").hidden=true; return;
+  }
+  const splits=[...new Set(rows.map(r=>r.split))].filter(Boolean);
+  $("#split").innerHTML=["test","val","train"].filter(s=>splits.includes(s)).concat(["all"]).map(s=>`<option>${s}</option>`).join("");
+  $("#split").disabled=false; $("#csvmsg").textContent=`${rows.length} clips · ${classes.length} classes loaded.`; render();
+});
+$("#split").addEventListener("change",render);
+$("#clip").addEventListener("change",showClip);
+let cur=[];
+function render(){
+  const s=$("#split").value; cur=s==="all"?rows:rows.filter(r=>r.split===s);
+  const st=stats(cur), flagged=cur.filter(r=>r.flagged_unusual==="True").length;
+  $("#res").hidden=false;
+  $("#stats").innerHTML=[[pct(st.acc),"top-1 accuracy"],[st.mf.toFixed(3),"macro-F1"],[cur.length,"clips in this split"],[flagged,"flagged as unusual"]].map(([a,b])=>`<div class="stat"><b>${a}</b><span>${b}</span></div>`).join("");
+  $("#per").innerHTML="<tr><th>Class</th><th>Clips</th><th>Precision</th><th>Recall</th><th>F1</th></tr>"+st.per.map(x=>`<tr><td>${x.c}</td><td>${x.n}</td><td>${x.p.toFixed(2)}</td><td>${x.r.toFixed(2)}</td><td>${x.f.toFixed(2)}</td></tr>`).join("");
+  $("#cm").innerHTML="<tr><th></th>"+classes.map(c=>`<th>${c.slice(0,6)}</th>`).join("")+"</tr>"+st.M.map((r,i)=>{const t=r.reduce((a,b)=>a+b,0)||1;
+    return `<tr><td>${classes[i]}</td>`+r.map((v,j)=>`<td style="background:color-mix(in srgb,var(${i===j?"--acc2":"--bad"}) ${Math.round(70*v/t)}%,transparent)">${v||""}</td>`).join("")+"</tr>"}).join("");
+  $("#clip").innerHTML=cur.map((r,i)=>`<option value="${i}">${r.filename} (${r.true})</option>`).join(""); showClip();
+}
+function showClip(){
+  const r=cur[+$("#clip").value]; if(!r){$("#clipview").innerHTML="";return}
+  const sc=classes.map(c=>[c,parseFloat(r["score_"+c])||0]).sort((a,b)=>b[1]-a[1]), ok=r.true===r.predicted;
+  $("#clipview").innerHTML=`<p>True: <b>${r.true}</b> · Predicted: <b>${r.predicted}</b> <span class="${ok?"ok":"no"}">${ok?"✓ correct":"✗ wrong"}</span>`+(r.flagged_unusual==="True"?' <span class="tag no">flagged unusual</span>':"")+`</p>`+
+    sc.map(([c,v])=>`<div class="bar ${c===r.true?"t":""}"><span>${c}</span><i><u style="width:${Math.round(v*100)}%"></u></i><span>${v.toFixed(2)}</span></div>`).join("")+
+    `<p class="note">Green bar = true class. Scores are independent sigmoid outputs.</p>`;
+}
+
+/* ---------- spectrogram lab (log-Mel, same settings as the project) ---------- */
+const SR=32000,NF=1024,HOP=256,NM=64;
+const mel=f=>2595*Math.log10(1+f/700), imel=m=>700*(10**(m/2595)-1);
+const FB=(()=>{const pts=Array.from({length:NM+2},(_,i)=>imel(mel(50)+(mel(14000)-mel(50))*i/(NM+1)));
+  const b=pts.map(f=>Math.floor((NF+1)*f/SR)), fb=[];
+  for(let m=1;m<=NM;m++){const row=new Float32Array(NF/2+1);
+    for(let k=b[m-1];k<b[m];k++)row[k]=(k-b[m-1])/Math.max(1,b[m]-b[m-1]);
+    for(let k=b[m];k<b[m+1];k++)row[k]=(b[m+1]-k)/Math.max(1,b[m+1]-b[m]);
+    fb.push(row)} return fb})();
+const HANN=Float32Array.from({length:NF},(_,i)=>0.5-0.5*Math.cos(2*Math.PI*i/NF));
+function fft(re,im){const n=re.length;
+  for(let i=1,j=0;i<n;i++){let bit=n>>1;for(;j&bit;bit>>=1)j^=bit;j^=bit;if(i<j){[re[i],re[j]]=[re[j],re[i]];[im[i],im[j]]=[im[j],im[i]]}}
+  for(let len=2;len<=n;len<<=1){const a=-2*Math.PI/len,wr=Math.cos(a),wi=Math.sin(a);
+    for(let i=0;i<n;i+=len){let cr=1,ci=0;for(let k=0;k<len/2;k++){const u=i+k,v=i+k+len/2,tr=re[v]*cr-im[v]*ci,ti=re[v]*ci+im[v]*cr;
+      re[v]=re[u]-tr;im[v]=im[u]-ti;re[u]+=tr;im[u]+=ti;const nr=cr*wr-ci*wi;ci=cr*wi+ci*wr;cr=nr}}}}
+function logmel(y){
+  const T=Math.max(1,Math.floor((y.length-NF)/HOP)+1), out=new Float32Array(T*NM), re=new Float32Array(NF), im=new Float32Array(NF);
+  let mx=-1e9;
+  for(let t=0;t<T;t++){re.fill(0);im.fill(0);for(let i=0;i<NF;i++)re[i]=(y[t*HOP+i]||0)*HANN[i];fft(re,im);
+    const p=new Float32Array(NF/2+1);for(let k=0;k<p.length;k++)p[k]=re[k]*re[k]+im[k]*im[k];
+    for(let m=0;m<NM;m++){let e=0;const row=FB[m];for(let k=0;k<p.length;k++)if(row[k])e+=row[k]*p[k];
+      const d=10*Math.log10(Math.max(e,1e-10));out[t*NM+m]=d;if(d>mx)mx=d}}
+  for(let i=0;i<out.length;i++)out[i]=Math.max(out[i],mx-80);   // 80 dB range, as top_db in the notebook
+  return{out,T,mx};
+}
+function color(v){const r=Math.min(255,Math.round(255*Math.min(1,v*1.6))),g=Math.round(255*Math.max(0,v*1.3-0.35)),b=Math.round(255*(0.35+0.4*Math.sin(Math.PI*Math.min(1,v*1.3))*(1-v)));return[r,g,Math.min(255,Math.max(40,b))]}
+function validate(y){if(y.length<SR/2)return"REJECT: clip shorter than 0.5 s";let m=0;for(const v of y)m=Math.max(m,Math.abs(v));if(!(m>1e-6))return"REJECT: digital silence";return""}
+$("#aud").addEventListener("change",async e=>{
+  const f=e.target.files[0]; if(!f) return; $("#audmsg").textContent="Decoding…";
+  try{
+    const ab=await f.arrayBuffer(), ctx=new (window.AudioContext||window.webkitAudioContext)(), buf=await ctx.decodeAudioData(ab); ctx.close();
+    const n=Math.min(Math.ceil(buf.duration*SR),SR*5), off=new OfflineAudioContext(1,n,SR), s=off.createBufferSource();
+    s.buffer=buf;s.connect(off.destination);s.start(); const y=(await off.startRendering()).getChannelData(0);
+    const bad=validate(y); if(bad){$("#audmsg").textContent=bad;$("#lab").hidden=true;return}
+    $("#player").src=URL.createObjectURL(f); $("#lab").hidden=false;
+    $("#audmsg").textContent=`${f.name} · first ${(y.length/SR).toFixed(1)} s analysed at 32 kHz.`;
+    draw(y);
+  }catch(err){$("#audmsg").textContent="REJECT: could not decode this file.";$("#lab").hidden=true}
+});
+function draw(y){
+  const w=$("#wave"),W=w.width=900,H=w.height=110,g=w.getContext("2d"),ink=getComputedStyle(document.body).color;
+  g.clearRect(0,0,W,H);g.strokeStyle=ink;g.globalAlpha=.8;g.beginPath();
+  for(let x=0;x<W;x++){const a=Math.floor(x*y.length/W),b=Math.floor((x+1)*y.length/W);let lo=0,hi=0;for(let i=a;i<b;i++){lo=Math.min(lo,y[i]);hi=Math.max(hi,y[i])}
+    g.moveTo(x,H/2-hi*H/2);g.lineTo(x,H/2-lo*H/2+1)}g.stroke();
+  const {out,T,mx}=logmel(y), c=$("#spec");c.width=T;c.height=NM;const cg=c.getContext("2d"),img=cg.createImageData(T,NM);
+  for(let t=0;t<T;t++)for(let m=0;m<NM;m++){const v=(out[t*NM+m]-(mx-80))/80,[r,gg,b]=color(v),p=((NM-1-m)*T+t)*4;img.data.set([r,gg,b,255],p)}
+  cg.putImageData(img,0,0);
+}
+</script>
+</body>
+</html>
